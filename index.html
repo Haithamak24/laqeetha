@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>لقيتها · Laqeetha</title>
+<meta name="description" content="Laqeetha (لقيتها): AI lost-and-found for universities. Describe what you lost in your own words; ID cards are never shown publicly. Palestine Polytechnic University.">
+<meta property="og:title" content="لقيتها · Laqeetha — Campus Lost & Found">
+<meta property="og:description" content="بيرجّع أغراضك، وبيخفي هويتك. · Gets your things back, keeps your ID private.">
+<meta property="og:image" content="https://haithamak24.github.io/laqeetha/icon-192.png">
+<meta name="theme-color" content="#F7F8FA">
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+@font-face{font-family:"Plex";font-weight:400;font-display:swap;src:url(ibm-plex-sans-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Plex";font-weight:500;font-display:swap;src:url(ibm-plex-sans-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Plex";font-weight:400;font-display:swap;src:url(ibm-plex-sans-arabic-arabic-400-normal.woff2) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-08FF,U+200C-200E,U+FB50-FDFF,U+FE70-FEFC}
+@font-face{font-family:"Plex";font-weight:500;font-display:swap;src:url(ibm-plex-sans-arabic-arabic-500-normal.woff2) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-08FF,U+200C-200E,U+FB50-FDFF,U+FE70-FEFC}
+:root{
+  /* Laqeetha brand (Mostafa's identity): navy = trust, amber = the lost item, green = found/returned */
+  --navy:#13294B; --ink:#13294B; --deep:#0B1A30; --tint:#E9EDF4; --paper:#F7F8FA; --card:#FFFFFF;
+  --line:#E1E5EC; --muted:#5B6678; --amber:#F4A12A; --green:#1FA971; --green-bright:#2BC487; --green-text:#13874F;
+  --redact:#0B1A30; --holder:#F4A12A; --body:#2E3D57;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.65 "Plex",system-ui,sans-serif;-webkit-text-size-adjust:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--navy);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.narrow{max-width:680px}
+
+/* top */
+.top{display:flex;align-items:center;gap:10px;padding:16px 0}
+.top img{height:36px;width:auto}
+.top .name{flex:1;font-size:13.5px;color:var(--muted);unicode-bidi:isolate;border-inline-start:1px solid var(--line);padding-inline-start:12px;line-height:36px}
+.lang{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer}
+
+/* hero */
+.hero{display:grid;gap:28px;padding:18px 0 56px;align-items:center}
+@media(min-width:900px){.hero{grid-template-columns:1.05fr .95fr;gap:56px;padding:40px 0 80px}}
+h1{font-size:clamp(34px,8vw,56px);line-height:1.12;margin:0 0 18px;font-weight:500;letter-spacing:-.5px;text-wrap:balance}
+.hero p{font-size:18.5px;color:var(--body);margin:0 0 24px;max-width:34em}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;text-decoration:none;font-weight:500;padding:13px 20px;border-radius:8px;font-size:16px}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+
+/* the post: exposed, then redacted */
+.post{background:#EDF0F5;border-radius:20px;padding:22px;position:relative}
+.group{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:14px;color:var(--muted)}
+.group i{width:34px;height:34px;border-radius:50%;background:#C5CEDB;display:block}
+.group b{display:block;color:var(--ink);font-weight:500;font-size:15px}
+.bubble{background:var(--card);border-radius:20px;border-start-start-radius:6px;padding:12px;box-shadow:0 1px 2px rgba(11,26,48,.08);max-width:440px}
+.holder{background:var(--holder);border-radius:14px;padding:12px}
+.idcard{background:#FDFDF9;border-radius:9px;padding:14px;display:grid;grid-template-columns:1fr 26%;gap:14px;font-size:14.5px;line-height:1.5;position:relative}
+[dir=ltr] .idcard{grid-template-columns:26% 1fr}
+[dir=ltr] .idcard .photo{order:-1}
+[dir=ltr] .idcard .hd{order:-2}
+.idcard .hd{grid-column:1/-1;display:flex;justify-content:space-between;font-size:11.5px;color:#5B6678;border-bottom:1px solid #E1E5EC;padding-bottom:6px}
+.fields{display:flex;flex-direction:column;gap:7px}
+.fields div{display:flex;gap:6px;align-items:baseline;white-space:nowrap}
+.fields small{color:#5B6678;font-size:12.5px}
+.fields .v{position:relative;font-weight:500;padding:0 3px}
+.fields .v::before{content:"";position:absolute;inset:-1px -2px;background:var(--amber);border-radius:3px;z-index:0;transform-origin:inline-start;animation:mark .5s .5s both}
+.fields .v::after{content:"";position:absolute;inset:-3px -4px;background:var(--redact);border-radius:3px;z-index:2;transform:scaleX(0);transform-origin:right;animation:redact .45s both}
+[dir=ltr] .fields .v::after{transform-origin:left}
+.fields div:nth-child(1) .v::after{animation-delay:2.4s}
+.fields div:nth-child(2) .v::after{animation-delay:2.6s}
+.fields div:nth-child(3) .v::after{animation-delay:2.8s}
+.fields .v span{position:relative;z-index:1}
+.photo{background:linear-gradient(#C5CEDB,#AEB9C9);border-radius:6px;aspect-ratio:.8;position:relative;overflow:hidden}
+.photo::after{content:"";position:absolute;inset:0;background:var(--redact);transform:scaleY(0);transform-origin:top;animation:redactY .45s 3s both}
+.stamp{position:absolute;inset-inline-end:-10px;bottom:-14px;background:var(--navy);color:#fff;border-radius:999px;padding:7px 14px 7px 12px;display:flex;align-items:center;gap:6px;font-weight:500;font-size:14px;box-shadow:0 6px 16px rgba(19,41,75,.35);animation:stamp .35s 3.4s both}
+.stamp svg{width:17px;height:17px;color:var(--green-bright)}
+.meta{font-size:12.5px;color:#5B6678;margin:8px 4px 0;display:flex;justify-content:space-between;gap:12px}
+.meta span:last-child{flex:none}
+.caption{margin:22px 4px 0;font-size:15px;min-height:3.2em;position:relative}
+.caption span{position:absolute;inset:0;transition:opacity .4s}
+.caption .before{animation:hide .3s 3.4s both}
+.caption .after{opacity:0;animation:show .4s 3.5s both;color:var(--green-text);font-weight:500}
+@keyframes mark{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes redact{to{transform:scaleX(1)}}
+@keyframes redactY{to{transform:scaleY(1)}}
+@keyframes stamp{from{opacity:0;transform:scale(1.4) rotate(-8deg)}to{opacity:1;transform:none}}
+@keyframes hide{to{opacity:0}}
+@keyframes show{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .fields .v::before,.fields .v::after,.photo::after,.stamp,.caption .before,.caption .after{animation-duration:.01s!important;animation-delay:0s!important}
+}
+
+/* sections */
+section{padding:56px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(26px,5.5vw,36px);line-height:1.2;margin:0 0 14px;letter-spacing:-.3px;text-wrap:balance}
+.lead{font-size:18px;color:var(--body);margin:0 0 26px;max-width:36em}
+
+.problem{display:grid;gap:28px;align-items:center}
+@media(min-width:900px){.problem{grid-template-columns:.9fr 1.1fr;gap:48px}}
+.count{display:flex;align-items:baseline;gap:14px;margin:0 0 14px}
+.count b{font-size:72px;line-height:1;font-weight:500;color:var(--ink)}
+.count b small{font-size:30px;color:var(--muted);font-weight:500}
+.count span{font-size:17px;max-width:16em}
+.evidence{width:100%;border-radius:12px;display:block;border:1px solid var(--line)}
+.cap{font-size:13.5px;color:var(--muted);margin-top:8px}
+.channels{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.channels span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 13px;font-size:14.5px}
+
+/* steps with phone screens */
+.steps{display:grid;gap:44px;margin-top:10px}
+.step{display:grid;gap:22px;align-items:center}
+@media(min-width:800px){.step{grid-template-columns:1fr 300px;gap:56px}.step:nth-child(even) .phone{order:-1}}
+.step .n{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;font-weight:500;margin-bottom:12px}
+.step h3{font-size:24px;line-height:1.3;margin:0 0 8px}
+.step p{margin:0;color:var(--body);max-width:30em}
+.phone{width:min(270px,78vw);margin:0 auto;border-radius:38px;padding:9px;background:var(--ink);box-shadow:0 18px 40px -16px rgba(11,26,48,.45)}
+.phone img{display:block;width:100%;border-radius:30px;aspect-ratio:390/844;object-fit:cover;object-position:top;background:#fff}
+
+/* privacy band */
+.privacy + section{border-top:0}
+.privacy{background:var(--deep);color:#fff;border-radius:32px;padding:40px 24px;margin:0 -4px;border:0}
+.privacy h2{color:#fff}
+.privacy .lead{color:#C5CEDB}
+.pair{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.pair .phone{background:#06111F;width:min(230px,42vw)}
+.pair figure{margin:0;text-align:center}
+.pair figcaption{font-size:14px;color:#C5CEDB;margin-top:12px;max-width:16em;margin-inline:auto}
+.rules{display:grid;gap:12px;margin:0 0 30px;padding:0;list-style:none;max-width:40em}
+.rules li{display:flex;gap:12px;align-items:flex-start}
+.rules svg{flex:none;width:22px;height:22px;color:var(--green-bright);margin-top:3px}
+
+/* proof */
+.proof{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 20px;margin-top:6px}
+@media(min-width:800px){.proof{grid-template-columns:repeat(4,1fr)}}
+.proof div{border-top:3px solid var(--navy);padding-top:12px}
+.proof b{display:block;font-size:38px;line-height:1.1;font-weight:500}
+.proof span{font-size:15px;color:var(--body)}
+.small{font-size:14px;color:var(--muted);margin-top:22px;max-width:44em}
+
+.places{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.places span{border:1.5px solid var(--line);border-radius:12px;padding:10px 16px;background:var(--card);font-weight:500}
+.places span.now{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+.team{display:grid;gap:10px;margin:6px 0 26px}
+@media(min-width:900px){.team{grid-template-columns:repeat(3,1fr)}}
+.person{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px}
+.person small{display:block;color:var(--muted);font-size:13.5px}
+.person a{color:var(--green-text);font-weight:500;font-size:14.5px;text-decoration:none}
+.ask{background:var(--tint);border-radius:16px;padding:28px 24px}
+.ask h3{font-size:22px;margin:0 0 6px}
+.ask p{margin:0 0 18px;color:var(--body)}
+footer{padding:36px 0 50px;color:var(--muted);font-size:13.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <img src="mark-navy.svg" alt="لقيتها · Laqeetha">
+    <div class="name">Campus Lost &amp; Found</div>
+    <button class="lang" id="langBtn">English</button>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1 data-t="h1"></h1>
+      <p data-t="hero_p"></p>
+      <div class="cta"><a class="btn" href="#how" data-t="cta_how"></a><a class="btn ghost" href="#contact" data-t="cta_contact"></a></div>
+    </div>
+    <div class="post" aria-label="">
+      <div class="group"><i></i><div><b data-t="group_name"></b><span data-t="group_sub"></span></div></div>
+      <div class="bubble">
+        <div class="holder">
+          <div class="idcard">
+            <div class="hd"><span data-t="card_hd1"></span><span data-t="card_hd2"></span></div>
+            <div class="fields">
+              <div><small data-t="f_name"></small><span class="v"><span data-t="v_name"></span></span></div>
+              <div><small data-t="f_dob"></small><span class="v"><span>14/03/2005</span></span></div>
+              <div><small data-t="f_no"></small><span class="v"><span>4•••••••7</span></span></div>
+            </div>
+            <div class="photo"></div>
+            <div class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg><span data-t="stamp"></span></div>
+          </div>
+        </div>
+        <div class="meta"><span data-t="post_txt"></span><span>10:42</span></div>
+      </div>
+      <p class="caption"><span class="before" data-t="cap_before"></span><span class="after" data-t="cap_after"></span></p>
+    </div>
+  </div>
+
+  <!-- VIDEO: when the animation is on YouTube (Unlisted), replace VIDEO_ID and remove the comment markers.
+  <section><div style="aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:#000"><iframe style="width:100%;height:100%;border:0" src="https://www.youtube-nocookie.com/embed/VIDEO_ID" title="Laqeetha" allow="encrypted-media;picture-in-picture" allowfullscreen></iframe></div></section>
+  -->
+
+  <section>
+    <div class="problem">
+      <div>
+        <h2 data-t="p_h"></h2>
+        <div class="count"><b>11<small>/16</small></b><span data-t="p_count"></span></div>
+        <p class="lead" data-t="p_lead"></p>
+        <div class="channels"><span data-t="ch1"></span><span data-t="ch2"></span><span data-t="ch3"></span></div>
+      </div>
+      <div>
+        <img class="evidence" src="evidence.webp" alt="" data-ta="ev_alt" loading="lazy">
+        <div class="cap" data-t="ev_cap"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2 data-t="how_h"></h2>
+    <p class="lead" data-t="how_lead"></p>
+    <div class="steps">
+      <div class="step"><div><span class="n">1</span><h3 data-t="s1_h"></h3><p data-t="s1_p"></p></div><div class="phone"><img data-src="tag" alt=""></div></div>
+      <div class="step"><div><span class="n">2</span><h3 data-t="s2_h"></h3><p data-t="s2_p"></p></div><div class="phone"><img data-src="search" alt=""></div></div>
+      <div class="step"><div><span class="n">3</span><h3 data-t="s3_h"></h3><p data-t="s3_p"></p></div><div class="phone"><img data-src="verified" alt=""></div></div>
+    </div>
+  </section>
+
+  <section class="privacy">
+    <h2 data-t="pv_h"></h2>
+    <p class="lead" data-t="pv_lead"></p>
+    <ul class="rules">
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/></svg><span data-t="r1"></span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/></svg><span data-t="r2"></span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8-7 10-3.5-2-7-5-7-10V6z"/></svg><span data-t="r3"></span></li>
+    </ul>
+    <div class="pair">
+      <figure><div class="phone"><img data-src="id" alt=""></div><figcaption data-t="f_id"></figcaption></figure>
+      <figure><div class="phone"><img data-src="feed" alt=""></div><figcaption data-t="f_feed"></figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-t="t_h"></h2>
+    <p class="lead" data-t="t_lead"></p>
+    <div class="proof">
+      <div><b>10/10</b><span data-t="m1"></span></div>
+      <div><b>0</b><span data-t="m2"></span></div>
+      <div><b>6/6</b><span data-t="m3"></span></div>
+      <div><b><bdi dir="ltr">&lt;0.1s</bdi></b><span data-t="m4"></span></div>
+    </div>
+    <p class="small" data-t="t_note"></p>
+  </section>
+
+  <section>
+    <h2 data-t="w_h"></h2>
+    <p class="lead" data-t="w_lead"></p>
+    <div class="places"><span class="now" data-t="pl0"></span><span data-t="pl1"></span><span data-t="pl2"></span><span data-t="pl3"></span><span data-t="pl4"></span></div>
+  </section>
+
+  <section id="contact">
+    <h2 data-t="team_h"></h2>
+    <div class="team">
+      <div class="person"><div><span data-t="n_haitham"></span><small>Haitham Abu Khaled</small></div><a href="https://linkedin.com/in/haitham-abu-khaled" target="_blank" rel="noopener">LinkedIn</a></div>
+      <div class="person"><div><span data-t="n_mustafa"></span><small>Mostafa Natsheh</small></div><a href="https://www.linkedin.com/in/mostafa-natsheh/" target="_blank" rel="noopener">LinkedIn</a></div>
+      <div class="person"><div><span data-t="n_osama"></span><small>Osama Abu Al-Halaweh</small></div></div>
+    </div>
+    <p class="small" style="margin:0 0 26px" data-t="sup"></p>
+    <div class="ask">
+      <h3 data-t="ask_h"></h3>
+      <p data-t="ask_p"></p>
+      <a class="btn" href="mailto:laqeetha.team@gmail.com">laqeetha.team@gmail.com</a>
+    </div>
+  </section>
+
+  <footer data-t="foot"></footer>
+</div>
+
+<script>
+const T = {
+ ar:{
+  h1:"ضاعت هويتك؟ صورتها رح توصل لكل الجروب.",
+  hero_p:"اليوم، الأغراض اللي بتنلاقى بالجامعة بتنصوّر وبتنزل على جروبات الواتساب والفيسبوك، والهويات معها: الاسم وتاريخ الميلاد ظاهرين للكل. لقيتها بترجّعلك غرضك، وبتخفي هويتك.",
+  cta_how:"كيف بيشتغل",cta_contact:"تواصل معنا",
+  group_name:"مفقودات الجامعة",group_sub:"جروب واتساب",card_hd1:"بطاقة هوية",card_hd2:"(مثال توضيحي)",
+  f_name:"الاسم:",v_name:"سارة خليل",f_dob:"الميلاد:",f_no:"الرقم:",stamp:"مخفية",post_txt:"لقيناها عند البوابة، صاحبتها تتواصل معنا",
+  cap_before:"اليوم: الاسم وتاريخ الميلاد ورقم الهوية منشورين لكل الجروب.",cap_after:"معنا: الهوية مخفية، وبس صاحبتها بتقدر تستلمها.",
+  p_h:"هاد اللي بصير كل أسبوع",p_count:"من عيّنة صغيرة من منشورات الواتساب كانت هويات وبطاقات جامعية",
+  p_lead:"وكلها كان فيها اسم صاحبها ظاهر، وبعضها تاريخ الميلاد ورقم الهوية كامل. وهاي عيّنة بس: الأغراض الضايعة بتنزل كل يوم بأكتر من مكان، وما في طريقة تدوّر فيها، وأي حدا بيقدر يدّعي إن الغرض إله.",
+  ch1:"جروبات الواتساب",ch2:"جروبات الفيسبوك",ch3:"غرف الأمن على البوابات",
+  ev_alt:"16 منشور حقيقي من جروبات الواتساب، الهويات مموّهة",ev_cap:"منشورات حقيقية من جروبات الجامعة، آب إلى تشرين الأول 2026. البيانات الشخصية مموّهة.",
+  how_h:"كيف بيشتغل",how_lead:"ثلاث خطوات، والذكاء الاصطناعي بيعمل الشغل الصعب.",
+  s1_h:"الأمن بصوّر الغرض",s1_p:"صورة وحدة بتكفي. الذكاء الاصطناعي بيعرف شو الغرض ولونه لحاله، وبيحفظه مع مكانه: أمن بوابة B أو C.",
+  s2_h:"إنت بتوصفه بكلامك",s2_p:"اكتب زي ما بتحكي: «ساعة سودا وذهبي». بيفهم العامية الفلسطينية والإنجليزي، وبيرتّبلك أقرب النتائج. وإذا غرضك لسا ما وصل، بيبعتلك تنبيه أول ما يوصل.",
+  s3_h:"بتثبت إنه إلك وبتستلمه",s3_p:"الصورة العامة مموّهة، فلازم توصف تفصيل ما بيظهر فيها. بعد التحقق، بتستلم غرضك من غرفة الأمن مع بطاقتك الجامعية.",
+  pv_h:"والهويات؟ ما بتنعرض أبداً.",pv_lead:"هاد الفرق الأساسي بيننا وبين الجروبات.",
+  r1:"النظام بيكتشف الهويات والبطاقات الجامعية لحاله من الصورة.",r2:"صورتها ما بتنعرض لأي طالب، ولا حتى مموّهة.",r3:"صاحبها بيلاقيها باسمه، وبيثبت إنها إله بآخر 4 أرقام من رقمه.",
+  f_id:"الأمن بصوّر بطاقة، والنظام بيعرف إنها هوية",f_feed:"بصفحة الموجودات بتظهر هيك: مخفية",
+  t_h:"جرّبناه على صور حقيقية من جامعتنا",t_lead:"نموذج أولي شغّال، مش فكرة على ورق.",
+  m1:"هويات اكتشفها النظام لحاله",m2:"إنذارات خاطئة على أغراض عادية",m3:"أوصاف بالإنجليزي لقت الغرض الصح أول نتيجة",m4:"لكل صورة على لابتوب عادي، بدون إنترنت",
+  t_note:"اختبار أولي على 6 أغراض و10 هويات من منشورات حقيقية. الخطوة الجاية: اختبار أوسع مع أمن الجامعة.",
+  w_h:"لمين؟",w_lead:"نبدأ بجامعتنا، وبعدها أي مكان فيه ناس كتير بتضيّع أغراضها: المؤسسة بتدفع اشتراك، والطالب أو الزائر بيستخدمه ببلاش.",
+  pl0:"جامعة بوليتكنك فلسطين",pl1:"جامعات",pl2:"مولات",pl3:"مستشفيات",pl4:"فنادق",
+  team_h:"الفريق",n_haitham:"هيثم ابو خالد",n_mustafa:"مصطفى النتشة",n_osama:"أسامة أبو الحلاوة",
+  sup:"طلاب علم حاسوب، جامعة بوليتكنك فلسطين · بإشراف د. إزدهار جوابرة",
+  ask_h:"بندور على أول مكان يجرّبه معنا",ask_p:"جامعة، مول، مستشفى، أو أي حدا عنده نصيحة. احكي معنا.",
+  foot:"لقيتها · Laqeetha · مشروع تخرج · جامعة بوليتكنك فلسطين · المنتدى الوطني الحادي عشر للإبداع والتميز 2026",
+  lang:"English"},
+ en:{
+  h1:"Lose your ID on campus, and the whole group sees it.",
+  hero_p:"Today, items found on campus are photographed and posted in WhatsApp and Facebook groups, ID cards included, with names and birth dates in full view. Laqeetha gets your things back and keeps your ID private.",
+  cta_how:"How it works",cta_contact:"Contact us",
+  group_name:"University Lost & Found",group_sub:"WhatsApp group",card_hd1:"Identity card",card_hd2:"(illustration)",
+  f_name:"Name:",v_name:"Sara Khalil",f_dob:"Born:",f_no:"No.:",stamp:"Hidden",post_txt:"Found at the gate, owner please contact us",
+  cap_before:"Today: name, birth date and ID number posted to the whole group.",cap_after:"With us: the ID stays hidden, and only its owner can claim it.",
+  p_h:"This happens every week",p_count:"of the posts in a small WhatsApp sample were ID or student cards",
+  p_lead:"Every one showed the owner's name; some showed the birth date and the full ID number. And that's only a sample: lost items are posted daily in several places, there's no way to search them, and anyone can claim anything.",
+  ch1:"WhatsApp groups",ch2:"Facebook groups",ch3:"Security rooms at the gates",
+  ev_alt:"16 real posts from WhatsApp groups, IDs blurred",ev_cap:"Real posts from university groups, Aug to Oct 2026. Personal data blurred.",
+  how_h:"How it works",how_lead:"Three steps. The AI does the hard part.",
+  s1_h:"Security takes a photo",s1_p:"One photo is enough. The AI recognises what the item is and its colour, and stores it with where it's kept: Gate B or Gate C security.",
+  s2_h:"You describe it in your own words",s2_p:"Type it the way you'd say it: \"black and gold watch\". It understands Palestinian Arabic and English and ranks the closest matches. If your item isn't there yet, you get an alert the moment it arrives.",
+  s3_h:"Prove it's yours and pick it up",s3_p:"Public photos are blurred, so you describe a detail that isn't visible. Once verified, you collect it from the security room with your student card.",
+  pv_h:"And ID cards? Never shown.",pv_lead:"This is the core difference from the groups.",
+  r1:"The system detects ID and student cards from the photo by itself.",r2:"Their photo is never shown to any student, not even blurred.",r3:"The owner finds it by name and proves it's theirs with the last 4 digits of the number.",
+  f_id:"Security photographs a card; the system knows it's an ID",f_feed:"In the found-items feed it appears like this: hidden",
+  t_h:"Tested on real photos from our university",t_lead:"A working prototype, not an idea on paper.",
+  m1:"ID cards detected automatically",m2:"false alarms on ordinary items",m3:"English descriptions found the right item first",m4:"per photo on a normal laptop, offline",
+  t_note:"An early test on 6 items and 10 ID cards from real posts. Next step: a larger test with campus security.",
+  w_h:"Who it's for",w_lead:"We start with our university, then anywhere crowds lose things. The institution pays a subscription; students and visitors use it for free.",
+  pl0:"Palestine Polytechnic University",pl1:"Universities",pl2:"Malls",pl3:"Hospitals",pl4:"Hotels",
+  team_h:"The team",n_haitham:"هيثم ابو خالد",n_mustafa:"مصطفى النتشة",n_osama:"أسامة أبو الحلاوة",
+  sup:"Computer Science students, Palestine Polytechnic University · Supervised by Dr. Ezdehar Jawabreh",
+  ask_h:"We're looking for a first place to pilot it",ask_p:"A university, a mall, a hospital, or anyone with advice. Talk to us.",
+  foot:"Laqeetha (لقيتها, \"I found it\") · Graduation project · Palestine Polytechnic University · 11th National Forum for Creativity and Excellence, 2026",
+  lang:"عربي"}
+};
+let lang = new URLSearchParams(location.search).get("lang") || (()=>{try{return localStorage.getItem("site_lang")}catch(e){}})() || "ar";
+function apply(){
+  const d = T[lang];
+  document.documentElement.lang = lang; document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-t]").forEach(e => e.textContent = d[e.dataset.t] ?? "");
+  document.querySelectorAll("[data-ta]").forEach(e => e.alt = d[e.dataset.ta] ?? "");
+  document.querySelectorAll("img[data-src]").forEach(e => e.src = `${lang}-${e.dataset.src}.webp`);
+  document.getElementById("langBtn").textContent = d.lang;
+  document.querySelector(".post").setAttribute("aria-label", d.cap_after);
+}
+document.getElementById("langBtn").onclick = () => { lang = lang === "ar" ? "en" : "ar"; try{localStorage.setItem("site_lang",lang)}catch(e){} apply(); };
+apply();
+</script>
+</body>
+</html>
