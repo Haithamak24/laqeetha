@@ -7,15 +7,24 @@
 <meta name="description" content="Laqeetha (لقيتها): AI lost-and-found for universities. Describe what you lost in your own words; ID cards are never shown publicly. Palestine Polytechnic University.">
 <meta property="og:title" content="لقيتها · Laqeetha — Campus Lost & Found">
 <meta property="og:description" content="بيرجّع أغراضك، وبيخفي هويتك. · Gets your things back, keeps your ID private.">
-<meta property="og:image" content="https://haithamak24.github.io/laqeetha/icon-192.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="لقيتها · Laqeetha">
+<meta property="og:url" content="https://haithamak24.github.io/laqeetha/">
+<meta property="og:image" content="https://haithamak24.github.io/laqeetha/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="لقيتها: بيرجّعلك غرضك، وبيخفي هويتك. Gets your things back. Keeps your ID private.">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#F7F8FA">
-<link rel="icon" href="favicon.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="assets/icons/favicon.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/css/motion.css">
+<script src="assets/js/motion.js" defer></script>
 <style>
-@font-face{font-family:"Plex";font-weight:400;font-display:swap;src:url(ibm-plex-sans-latin-400-normal.woff2) format("woff2")}
-@font-face{font-family:"Plex";font-weight:500;font-display:swap;src:url(ibm-plex-sans-latin-500-normal.woff2) format("woff2")}
-@font-face{font-family:"Plex";font-weight:400;font-display:swap;src:url(ibm-plex-sans-arabic-arabic-400-normal.woff2) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-08FF,U+200C-200E,U+FB50-FDFF,U+FE70-FEFC}
-@font-face{font-family:"Plex";font-weight:500;font-display:swap;src:url(ibm-plex-sans-arabic-arabic-500-normal.woff2) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-08FF,U+200C-200E,U+FB50-FDFF,U+FE70-FEFC}
+@font-face{font-family:"Plex";font-weight:400;font-display:swap;src:url(assets/fonts/ibm-plex-sans-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Plex";font-weight:500;font-display:swap;src:url(assets/fonts/ibm-plex-sans-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Plex";font-weight:400;font-display:swap;src:url(assets/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-08FF,U+200C-200E,U+FB50-FDFF,U+FE70-FEFC}
+@font-face{font-family:"Plex";font-weight:500;font-display:swap;src:url(assets/fonts/ibm-plex-sans-arabic-arabic-500-normal.woff2) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-08FF,U+200C-200E,U+FB50-FDFF,U+FE70-FEFC}
 :root{
   /* Laqeetha brand (Mostafa's identity): navy = trust, amber = the lost item, green = found/returned */
   --navy:#13294B; --ink:#13294B; --deep:#0B1A30; --tint:#E9EDF4; --paper:#F7F8FA; --card:#FFFFFF;
@@ -35,6 +44,18 @@ a{color:inherit}
 .top img{height:36px;width:auto}
 .top .name{flex:1;font-size:13.5px;color:var(--muted);unicode-bidi:isolate;border-inline-start:1px solid var(--line);padding-inline-start:12px;line-height:36px}
 .lang{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer}
+.top{padding-bottom:8px}
+.nav{display:flex;gap:6px;overflow-x:auto;padding:6px 0 4px;scrollbar-width:none;margin:0 -2px}
+.nav::-webkit-scrollbar{display:none}
+.nav a{flex:none;text-decoration:none;font-size:14.5px;padding:7px 14px;border-radius:999px;color:var(--muted);border:1px solid transparent}
+.nav a:hover{color:var(--ink);background:var(--tint)}
+.nav a[aria-current=page]{color:var(--ink);background:var(--card);border-color:var(--line);font-weight:500}
+.more{display:grid;gap:12px;margin-top:22px}
+@media(min-width:800px){.more{grid-template-columns:repeat(3,1fr)}}
+.more a{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.more a b{display:block;font-weight:500;margin-bottom:2px}
+.more a span{font-size:14.5px;color:var(--muted)}
+.more a:hover{border-color:var(--navy)}
 
 /* hero */
 .hero{display:grid;gap:28px;padding:18px 0 56px;align-items:center}
@@ -148,15 +169,26 @@ h2{font-size:clamp(26px,5.5vw,36px);line-height:1.2;margin:0 0 14px;letter-spaci
 .ask h3{font-size:22px;margin:0 0 6px}
 .ask p{margin:0 0 18px;color:var(--body)}
 footer{padding:36px 0 50px;color:var(--muted);font-size:13.5px}
+
+/* the explainer film */
+.film{padding-top:8px;border-top:0}
+.film .video{position:relative;border-radius:24px;overflow:hidden;background:#F5F6FA;box-shadow:0 24px 50px -28px rgba(11,26,48,.45);border:1px solid var(--line);aspect-ratio:16/9}
+.film video{display:block;width:100%;height:100%;object-fit:cover}
+.sound{position:absolute;inset-inline-start:14px;bottom:56px;display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border:0;border-radius:999px;padding:9px 16px;font:inherit;font-size:14.5px;font-weight:500;cursor:pointer;box-shadow:0 6px 18px rgba(11,26,48,.35);transition:transform .15s}
+.sound:active{transform:scale(.96)}
+.sound svg{width:18px;height:18px}
+.film figcaption{font-size:13.5px;color:var(--muted);margin-top:10px}
+.film h2{margin-bottom:16px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <img src="mark-navy.svg" alt="لقيتها · Laqeetha">
+    <img src="assets/img/mark-navy.svg" alt="لقيتها · Laqeetha">
     <div class="name">Campus Lost &amp; Found</div>
     <button class="lang" id="langBtn">English</button>
   </header>
+  <nav class="nav"><a href="index.html" aria-current="page" data-t="nav_home"></a><a href="tech.html" data-t="nav_tech"></a><a href="institutions.html" data-t="nav_inst"></a><a href="faq.html" data-t="nav_faq"></a></nav>
 
   <div class="hero">
     <div>
@@ -185,9 +217,16 @@ footer{padding:36px 0 50px;color:var(--muted);font-size:13.5px}
     </div>
   </div>
 
-  <!-- VIDEO: when the animation is on YouTube (Unlisted), replace VIDEO_ID and remove the comment markers.
-  <section><div style="aspect-ratio:16/9;border-radius:24px;overflow:hidden;background:#000"><iframe style="width:100%;height:100%;border:0" src="https://www.youtube-nocookie.com/embed/VIDEO_ID" title="Laqeetha" allow="encrypted-media;picture-in-picture" allowfullscreen></iframe></div></section>
-  -->
+  <section class="film" id="film">
+    <h2 data-t="film_h"></h2>
+    <figure style="margin:0">
+      <div class="video">
+        <video id="filmVid" poster="assets/img/film-poster.webp" muted playsinline loop controls preload="metadata" data-ta="film_alt"><source src="assets/video/laqeetha-explainer.mp4" type="video/mp4"><source src="assets/video/laqeetha-explainer.webm" type="video/webm"></video>
+        <button class="sound" id="soundBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg><span data-t="film_sound"></span></button>
+      </div>
+      <figcaption data-t="film_cap"></figcaption>
+    </figure>
+  </section>
 
   <section>
     <div class="problem">
@@ -198,7 +237,7 @@ footer{padding:36px 0 50px;color:var(--muted);font-size:13.5px}
         <div class="channels"><span data-t="ch1"></span><span data-t="ch2"></span><span data-t="ch3"></span></div>
       </div>
       <div>
-        <img class="evidence" src="evidence.webp" alt="" data-ta="ev_alt" loading="lazy">
+        <img class="evidence" src="assets/img/evidence.webp" alt="" data-ta="ev_alt" loading="lazy">
         <div class="cap" data-t="ev_cap"></div>
       </div>
     </div>
@@ -234,8 +273,8 @@ footer{padding:36px 0 50px;color:var(--muted);font-size:13.5px}
     <div class="proof">
       <div><b>10/10</b><span data-t="m1"></span></div>
       <div><b>0</b><span data-t="m2"></span></div>
-      <div><b>6/6</b><span data-t="m3"></span></div>
-      <div><b><bdi dir="ltr">&lt;0.1s</bdi></b><span data-t="m4"></span></div>
+      <div><b>12/12</b><span data-t="m3"></span></div>
+      <div><b>6/6</b><span data-t="m4"></span></div>
     </div>
     <p class="small" data-t="t_note"></p>
   </section>
@@ -246,12 +285,21 @@ footer{padding:36px 0 50px;color:var(--muted);font-size:13.5px}
     <div class="places"><span class="now" data-t="pl0"></span><span data-t="pl1"></span><span data-t="pl2"></span><span data-t="pl3"></span><span data-t="pl4"></span></div>
   </section>
 
+  <section>
+    <h2 data-t="more_h"></h2>
+    <div class="more">
+      <a href="tech.html"><b data-t="more1"></b><span data-t="more1p"></span></a>
+      <a href="institutions.html"><b data-t="more2"></b><span data-t="more2p"></span></a>
+      <a href="faq.html"><b data-t="more3"></b><span data-t="more3p"></span></a>
+    </div>
+  </section>
+
   <section id="contact">
     <h2 data-t="team_h"></h2>
     <div class="team">
       <div class="person"><div><span data-t="n_haitham"></span><small>Haitham Abu Khaled</small></div><a href="https://linkedin.com/in/haitham-abu-khaled" target="_blank" rel="noopener">LinkedIn</a></div>
       <div class="person"><div><span data-t="n_mustafa"></span><small>Mostafa Natsheh</small></div><a href="https://www.linkedin.com/in/mostafa-natsheh/" target="_blank" rel="noopener">LinkedIn</a></div>
-      <div class="person"><div><span data-t="n_osama"></span><small>Osama Abu Al-Halaweh</small></div></div>
+      <div class="person"><div><span data-t="n_osama"></span><small>Osama Abu Al-Halaweh</small></div><a href="https://www.linkedin.com/in/osama-abu-al-halaweh-30670b30a/" target="_blank" rel="noopener">LinkedIn</a></div>
     </div>
     <p class="small" style="margin:0 0 26px" data-t="sup"></p>
     <div class="ask">
@@ -270,6 +318,7 @@ const T = {
   h1:"ضاعت هويتك؟ صورتها رح توصل لكل الجروب.",
   hero_p:"اليوم، الأغراض اللي بتنلاقى بالجامعة بتنصوّر وبتنزل على جروبات الواتساب والفيسبوك، والهويات معها: الاسم وتاريخ الميلاد ظاهرين للكل. لقيتها بترجّعلك غرضك، وبتخفي هويتك.",
   cta_how:"كيف بيشتغل",cta_contact:"تواصل معنا",
+  film_h:"القصة كاملة بـ48 ثانية",film_sound:"شغّل الصوت",film_cap:"رسوم متحركة: مصطفى النتشة",film_alt:"فيديو قصير: طالب بيضيّع جزدانه، الذكاء الاصطناعي بيطابقه، وبيرجعله. والهويات بتضل مخفية.",
   group_name:"مفقودات الجامعة",group_sub:"جروب واتساب",card_hd1:"بطاقة هوية",card_hd2:"(مثال توضيحي)",
   f_name:"الاسم:",v_name:"سارة خليل",f_dob:"الميلاد:",f_no:"الرقم:",stamp:"مخفية",post_txt:"لقيناها عند البوابة، صاحبتها تتواصل معنا",
   cap_before:"اليوم: الاسم وتاريخ الميلاد ورقم الهوية منشورين لكل الجروب.",cap_after:"معنا: الهوية مخفية، وبس صاحبتها بتقدر تستلمها.",
@@ -278,26 +327,30 @@ const T = {
   ch1:"جروبات الواتساب",ch2:"جروبات الفيسبوك",ch3:"غرف الأمن على البوابات",
   ev_alt:"16 منشور حقيقي من جروبات الواتساب، الهويات مموّهة",ev_cap:"منشورات حقيقية من جروبات الجامعة، آب إلى تشرين الأول 2026. البيانات الشخصية مموّهة.",
   how_h:"كيف بيشتغل",how_lead:"ثلاث خطوات، والذكاء الاصطناعي بيعمل الشغل الصعب.",
-  s1_h:"الأمن بصوّر الغرض",s1_p:"صورة وحدة بتكفي. الذكاء الاصطناعي بيعرف شو الغرض ولونه لحاله، وبيحفظه مع مكانه: أمن بوابة B أو C.",
+  s1_h:"الأمن بصوّر الغرض",s1_p:"صورة وحدة بتكفي. الذكاء الاصطناعي بيعرف شو الغرض ولونه لحاله، وبيحفظه مع مكانه: أمن بوابة A أو B أو C، أو مبنى أبو رمّان. وإذا غلط بالاسم، الأمن بيصحّحه بكبسة.",
   s2_h:"إنت بتوصفه بكلامك",s2_p:"اكتب زي ما بتحكي: «ساعة سودا وذهبي». بيفهم العامية الفلسطينية والإنجليزي، وبيرتّبلك أقرب النتائج. وإذا غرضك لسا ما وصل، بيبعتلك تنبيه أول ما يوصل.",
   s3_h:"بتثبت إنه إلك وبتستلمه",s3_p:"الصورة العامة مموّهة، فلازم توصف تفصيل ما بيظهر فيها. بعد التحقق، بتستلم غرضك من غرفة الأمن مع بطاقتك الجامعية.",
   pv_h:"والهويات؟ ما بتنعرض أبداً.",pv_lead:"هاد الفرق الأساسي بيننا وبين الجروبات.",
   r1:"النظام بيكتشف الهويات والبطاقات الجامعية لحاله من الصورة.",r2:"صورتها ما بتنعرض لأي طالب، ولا حتى مموّهة.",r3:"صاحبها بيلاقيها باسمه، وبيثبت إنها إله بآخر 4 أرقام من رقمه.",
   f_id:"الأمن بصوّر بطاقة، والنظام بيعرف إنها هوية",f_feed:"بصفحة الموجودات بتظهر هيك: مخفية",
   t_h:"جرّبناه على صور حقيقية من جامعتنا",t_lead:"نموذج أولي شغّال، مش فكرة على ورق.",
-  m1:"هويات اكتشفها النظام لحاله",m2:"إنذارات خاطئة على أغراض عادية",m3:"أوصاف بالإنجليزي لقت الغرض الصح أول نتيجة",m4:"لكل صورة على لابتوب عادي، بدون إنترنت",
-  t_note:"اختبار أولي على 6 أغراض و10 هويات من منشورات حقيقية. الخطوة الجاية: اختبار أوسع مع أمن الجامعة.",
+  m1:"هويات اكتشفها النظام لحاله",m2:"إنذارات خاطئة على أغراض عادية",m3:"أوصاف بالعامية لقت الغرض الصح أول نتيجة (بدون قاموسنا: 3 من 12)",m4:"أوصاف بالإنجليزي لقت الغرض الصح أول نتيجة",
+  t_note:"اختبار أولي على 6 أغراض و10 هويات من منشورات حقيقية، و18 وصف (12 بالعامية و6 بالإنجليزي). كل صورة بتتحلل بأقل من ربع ثانية على لابتوب عادي، بدون إنترنت. الخطوة الجاية: اختبار أوسع مع أمن الجامعة.",
   w_h:"لمين؟",w_lead:"نبدأ بجامعتنا، وبعدها أي مكان فيه ناس كتير بتضيّع أغراضها: المؤسسة بتدفع اشتراك، والطالب أو الزائر بيستخدمه ببلاش.",
   pl0:"جامعة بوليتكنك فلسطين",pl1:"جامعات",pl2:"مولات",pl3:"مستشفيات",pl4:"فنادق",
   team_h:"الفريق",n_haitham:"هيثم ابو خالد",n_mustafa:"مصطفى النتشة",n_osama:"أسامة أبو الحلاوة",
   sup:"طلاب علم حاسوب، جامعة بوليتكنك فلسطين · بإشراف د. إزدهار جوابرة",
   ask_h:"بندور على أول مكان يجرّبه معنا",ask_p:"جامعة، مول، مستشفى، أو أي حدا عنده نصيحة. احكي معنا.",
   foot:"لقيتها · Laqeetha · مشروع تخرج · جامعة بوليتكنك فلسطين · المنتدى الوطني الحادي عشر للإبداع والتميز 2026",
+  nav_home:"الرئيسية",nav_tech:"كيف بنيناه",nav_inst:"للمؤسسات",nav_faq:"أسئلة شائعة",
+  more_h:"بدك تعرف أكتر؟",more1:"كيف بنيناه",more1p:"الذكاء الاصطناعي، الخصوصية، ونتائج الاختبار كما هي.",
+  more2:"للمؤسسات",more2p:"كيف بتشتغل التجربة، ومين بيدفع، ولوين رايحين.",more3:"أسئلة شائعة",more3p:"الأسئلة الصعبة، وأجوبتها بصراحة.",
   lang:"English"},
  en:{
   h1:"Lose your ID on campus, and the whole group sees it.",
   hero_p:"Today, items found on campus are photographed and posted in WhatsApp and Facebook groups, ID cards included, with names and birth dates in full view. Laqeetha gets your things back and keeps your ID private.",
   cta_how:"How it works",cta_contact:"Contact us",
+  film_h:"The whole story in 48 seconds",film_sound:"Turn sound on",film_cap:"Animation: Mostafa Natsheh",film_alt:"Short film: a student loses a wallet, the AI matches it, and it goes back to him. ID cards stay hidden.",
   group_name:"University Lost & Found",group_sub:"WhatsApp group",card_hd1:"Identity card",card_hd2:"(illustration)",
   f_name:"Name:",v_name:"Sara Khalil",f_dob:"Born:",f_no:"No.:",stamp:"Hidden",post_txt:"Found at the gate, owner please contact us",
   cap_before:"Today: name, birth date and ID number posted to the whole group.",cap_after:"With us: the ID stays hidden, and only its owner can claim it.",
@@ -306,21 +359,24 @@ const T = {
   ch1:"WhatsApp groups",ch2:"Facebook groups",ch3:"Security rooms at the gates",
   ev_alt:"16 real posts from WhatsApp groups, IDs blurred",ev_cap:"Real posts from university groups, Aug to Oct 2026. Personal data blurred.",
   how_h:"How it works",how_lead:"Three steps. The AI does the hard part.",
-  s1_h:"Security takes a photo",s1_p:"One photo is enough. The AI recognises what the item is and its colour, and stores it with where it's kept: Gate B or Gate C security.",
+  s1_h:"Security takes a photo",s1_p:"One photo is enough. The AI recognises what the item is and its colour, and stores it with where it's kept: Gate A, B or C security, or the Abu Romman Building. If it gets the name wrong, security fixes it with one tap.",
   s2_h:"You describe it in your own words",s2_p:"Type it the way you'd say it: \"black and gold watch\". It understands Palestinian Arabic and English and ranks the closest matches. If your item isn't there yet, you get an alert the moment it arrives.",
   s3_h:"Prove it's yours and pick it up",s3_p:"Public photos are blurred, so you describe a detail that isn't visible. Once verified, you collect it from the security room with your student card.",
   pv_h:"And ID cards? Never shown.",pv_lead:"This is the core difference from the groups.",
   r1:"The system detects ID and student cards from the photo by itself.",r2:"Their photo is never shown to any student, not even blurred.",r3:"The owner finds it by name and proves it's theirs with the last 4 digits of the number.",
   f_id:"Security photographs a card; the system knows it's an ID",f_feed:"In the found-items feed it appears like this: hidden",
   t_h:"Tested on real photos from our university",t_lead:"A working prototype, not an idea on paper.",
-  m1:"ID cards detected automatically",m2:"false alarms on ordinary items",m3:"English descriptions found the right item first",m4:"per photo on a normal laptop, offline",
-  t_note:"An early test on 6 items and 10 ID cards from real posts. Next step: a larger test with campus security.",
+  m1:"ID cards detected automatically",m2:"false alarms on ordinary items",m3:"Palestinian-Arabic descriptions found the right item first (without our glossary: 3 of 12)",m4:"English descriptions found the right item first",
+  t_note:"An early test on 6 items and 10 ID cards from real posts, with 18 descriptions (12 in Palestinian Arabic, 6 in English). Each photo takes under a quarter of a second on a normal laptop, offline. Next step: a larger test with campus security.",
   w_h:"Who it's for",w_lead:"We start with our university, then anywhere crowds lose things. The institution pays a subscription; students and visitors use it for free.",
   pl0:"Palestine Polytechnic University",pl1:"Universities",pl2:"Malls",pl3:"Hospitals",pl4:"Hotels",
   team_h:"The team",n_haitham:"هيثم ابو خالد",n_mustafa:"مصطفى النتشة",n_osama:"أسامة أبو الحلاوة",
   sup:"Computer Science students, Palestine Polytechnic University · Supervised by Dr. Ezdehar Jawabreh",
   ask_h:"We're looking for a first place to pilot it",ask_p:"A university, a mall, a hospital, or anyone with advice. Talk to us.",
   foot:"Laqeetha (لقيتها, \"I found it\") · Graduation project · Palestine Polytechnic University · 11th National Forum for Creativity and Excellence, 2026",
+  nav_home:"Home",nav_tech:"How we built it",nav_inst:"For institutions",nav_faq:"FAQ",
+  more_h:"Want to know more?",more1:"How we built it",more1p:"The AI, the privacy design, and our test results as they came out.",
+  more2:"For institutions",more2p:"How a pilot works, who pays, and where we're going.",more3:"FAQ",more3p:"The hard questions, answered honestly.",
   lang:"عربي"}
 };
 let lang = new URLSearchParams(location.search).get("lang") || (()=>{try{return localStorage.getItem("site_lang")}catch(e){}})() || "ar";
@@ -328,8 +384,8 @@ function apply(){
   const d = T[lang];
   document.documentElement.lang = lang; document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   document.querySelectorAll("[data-t]").forEach(e => e.textContent = d[e.dataset.t] ?? "");
-  document.querySelectorAll("[data-ta]").forEach(e => e.alt = d[e.dataset.ta] ?? "");
-  document.querySelectorAll("img[data-src]").forEach(e => e.src = `${lang}-${e.dataset.src}.webp`);
+  document.querySelectorAll("[data-ta]").forEach(e => e.tagName === "VIDEO" ? e.setAttribute("aria-label", d[e.dataset.ta] ?? "") : e.alt = d[e.dataset.ta] ?? "");
+  document.querySelectorAll("img[data-src]").forEach(e => e.src = `assets/img/screens/${lang}-${e.dataset.src}.webp`);
   document.getElementById("langBtn").textContent = d.lang;
   document.querySelector(".post").setAttribute("aria-label", d.cap_after);
 }

@@ -1,0 +1,49 @@
+/* Laqeetha site motion. One idea, borrowed from the logo's dot: things rise a little and settle into place.
+   Content below the fold settles in as you reach it; numbers count up; the steps light up in order.
+   Without JavaScript, or with "reduce motion" on, everything is simply there. */
+@keyframes mo-rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* first screen: CSS-only so nothing flickers on load */
+.hero>div:first-child>*{animation:mo-rise .6s cubic-bezier(.2,.8,.2,1) both}
+.hero>div:first-child>:nth-child(2){animation-delay:.08s}
+.hero>div:first-child>:nth-child(3){animation-delay:.16s}
+.hero .post{animation:mo-rise .7s .12s cubic-bezier(.2,.8,.2,1) both}
+section.first>*{animation:mo-rise .6s cubic-bezier(.2,.8,.2,1) both}
+section.first>:nth-child(2){animation-delay:.08s}
+
+/* scroll reveal (motion.js marks only what starts below the fold) */
+.mo [data-mo]{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--d,0) * 90ms)}
+.mo [data-mo].in{opacity:1;transform:none}
+
+/* how it works: each step's number fills in once you reach it */
+.mo .step[data-mo] .n{background:var(--tint);color:var(--navy);transition:background .45s .35s,color .45s .35s}
+.mo .step[data-mo].in .n{background:var(--navy);color:#fff}
+.mo .step[data-mo] .phone{transform:translateY(26px);transition:transform .9s .1s cubic-bezier(.2,.8,.2,1)}
+.mo .step[data-mo].in .phone{transform:none}
+
+/* privacy rules: the shields draw themselves */
+.mo .rules li[data-mo] svg path{stroke-dasharray:70;stroke-dashoffset:70;transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--d,0) * 120ms + .25s)}
+.mo .rules li[data-mo].in svg path{stroke-dashoffset:0}
+
+/* links and buttons answer the pointer */
+.btn{transition:transform .15s,box-shadow .2s,background-color .2s}
+.btn:hover{box-shadow:0 8px 20px -10px rgba(19,41,75,.6)}
+.btn:active{transform:scale(.97)}
+.more a{transition:border-color .2s,transform .2s,box-shadow .2s}
+.more a:hover{transform:translateY(-2px);box-shadow:0 12px 26px -16px rgba(11,26,48,.4)}
+.nav a{transition:background-color .2s,color .2s}
+
+/* FAQ answers slide open (browsers that support it; others just open) */
+@supports selector(::details-content){
+  :root{interpolate-size:allow-keywords}
+  details::details-content{block-size:0;overflow-y:clip;transition:block-size .32s cubic-bezier(.2,.8,.2,1),content-visibility .32s allow-discrete}
+  details[open]::details-content{block-size:auto}
+}
+summary::before{transition:background-color .2s,transform .25s}
+details[open] summary::before{transform:rotate(180deg)}
+
+@media (prefers-reduced-motion:reduce){
+  .hero>div:first-child>*,.hero .post,section.first>*{animation:none}
+  .mo [data-mo]{opacity:1;transform:none;transition:none}
+  details::details-content{transition:none}
+}
