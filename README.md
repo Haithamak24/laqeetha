@@ -87,7 +87,7 @@ git push
 
 ## Related
 
-- **The demo app** (FastAPI + CLIP, runs offline on the booth laptop): separate repository.
+- **The app itself** (FastAPI + CLIP, runs offline on the booth laptop): [Haithamak24/laqeetha-app](https://github.com/Haithamak24/laqeetha-app)
 - **https://haithamak24.github.io/lostfound/** redirects here. Earlier printed QR codes point to that address, so the `lostfound` repository must stay.
 
 ## Team
